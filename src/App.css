@@ -1,3 +1,14 @@
 .card {
-  width: 18rem;
+  width: 20rem;
+  height: 34rem;
+  margin: 2rem;
+}
+
+.card-img-top {
+  height: 22rem
+}
+
+.card--container {
+  display: flex;
+  flex-wrap: wrap;
 }
