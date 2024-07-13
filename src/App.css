@@ -2,13 +2,21 @@
   width: 20rem;
   height: 34rem;
   margin: 2rem;
+  background-color: black;
+  border: solid rgb(139, 136, 136);
 }
 
 .card-img-top {
-  height: 22rem
+  height: 22rem;
+  object-fit: contain;
 }
 
 .card--container {
   display: flex;
   flex-wrap: wrap;
+  background-color: black;
+}
+
+.card-body {
+  color: white;
 }
