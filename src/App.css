@@ -1,13 +1,12 @@
 .card {
-  width: 20rem;
-  height: 34rem;
   margin: 2rem;
+  width:22rem;
   background-color: black;
   border: solid rgb(139, 136, 136);
 }
 
 .card-img-top {
-  height: 22rem;
+  height: 16rem;
   object-fit: contain;
 }
 
@@ -19,4 +18,5 @@
 
 .card-body {
   color: white;
+  height: 6rem;
 }
