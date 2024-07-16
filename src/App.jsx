@@ -4,13 +4,14 @@ import Navbar from './components/Navbar'
 import Card from "./components/Card"
 import React from 'react'
 import rawgGameData from './gameData.js'
+import rawgGameDataSmall from './gameDataSmall.js'
 
 
 function App() {
 
-  const [games,setGames] = React.useState(rawgGameData)
+  const [games,setGames] = React.useState(rawgGameDataSmall.results)
 
-  const cards = games.results.map(
+  const cards = games.map(
     (card) => 
     <Card 
       key={card.id}
@@ -18,12 +19,14 @@ function App() {
       img={card.background_image}
     />
     )
-  
-  // React.useEffect(() => {
-  //   fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating&metacritic=85")
-  //   .then(res => res.json())
-  //   .then(data => setDeals(data))
-  // }, [])
+
+  React.useEffect(() => {
+    setGames(games.map(game => { 
+      fetch(`https://www.cheapshark.com/api/1.0/games?title=${game.slug}`)
+      .then(res => res.json())
+      .then(data => console.log(data))   
+      return {...game,foot:'test'}}))
+  }, [])
 
 
   return (
