@@ -2,20 +2,32 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css'
 import Navbar from './components/Navbar'
 import Card from "./components/Card"
-import data from './Data.jsx'
+import React from 'react'
 
 
 function App() {
-  const cards = data.map(
+
+  const [deals,setDeals] = React.useState([])
+
+  const cards = deals.map(
     (card) => 
     <Card 
       key={card.id}
-      heading={card.heading}
-      description={card.description}
-      img={card.img}
+      heading={card.title}
+      description='dummy text for now!'
+      img={card.thumb}
     />
     )
-  console.log(cards)
+  
+  React.useEffect(() => {
+    fetch("https://www.cheapshark.com/api/1.0/deals?sortBy=DealRating&metacritic=85")
+    .then(res => res.json())
+    .then(data => setDeals(data))
+  }, [])
+
+  console.log(deals)
+
+
   return (
     <>
       <div>
