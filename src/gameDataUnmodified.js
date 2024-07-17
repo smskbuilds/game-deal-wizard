@@ -1,4 +1,4 @@
-{
+x = {
     "count": 870236,
     "next": "https://api.rawg.io/api/games?key=d9e2c4de47634f138bae98618a84e341&page=2",
     "previous": null,
