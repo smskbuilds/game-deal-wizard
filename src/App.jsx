@@ -11,7 +11,7 @@ import cheapSharkDataLocal from './cheapSharkDataLocal.js'
 function App() {
 
   const [gamesData,setGamesData] = React.useState(rawgGameDataSmall.results)
-  const [cheapShardData,setCheapSharkData] = React.useState([])
+  const [cheapShardData,setCheapSharkData] = React.useState(cheapSharkDataLocal)
 
   // console.log([cheapShardData])
   // console.log([cheapShardData].length)
@@ -36,7 +36,7 @@ function App() {
       key={card.id}
       heading={card.name}
       img={card.background_image}
-      link={`https://www.cheapshark.com/redirect?dealID=${findCheapestDeal(cheapSharkDataLocal[index])}`}
+      link={`https://www.cheapshark.com/redirect?dealID=${findCheapestDeal(cheapShardData[index])}`}
     />
     )
 
