@@ -9,17 +9,24 @@ import { dealsCollection } from "./firebase.js"
 
 function App() {
 
+
+  // Two state arrays - one carries games data from RAWG, the other carries deals data from CheapShark
+
   const [gamesData,setGamesData] = React.useState(rawgGameDataSmall.results)
-  const [cheapShardData,setCheapSharkData] = React.useState([])
+  const [cheakSharkData,setCheapSharkData] = React.useState([])
+
+  // Uploads a CheapShark deal to FireStore. Does not currently check to see if the deal already exists
 
   async function createNewDeal() {
-    if (cheapShardData.length>0){
-    for (let step = 0; step < cheapShardData.length; step++)
-      if(cheapShardData[step].length>0){
-        for (let innerStep = 0; innerStep < cheapShardData[step].length; innerStep++)
-          {const newDealRef = await addDoc(dealsCollection,cheapShardData[step][innerStep])
+    if (cheakSharkData.length>0){
+    for (let step = 0; step < cheakSharkData.length; step++)
+      if(cheakSharkData[step].length>0){
+        for (let innerStep = 0; innerStep < cheakSharkData[step].length; innerStep++)
+          {const newDealRef = await addDoc(dealsCollection,cheakSharkData[step][innerStep])
       }}
   }}
+
+  // Given an array of deal objects, return the cheapest deal object
 
   function findCheapestDeal(dealArray) {
     let cheapest = {}
@@ -33,37 +40,53 @@ function App() {
       }
     return cheapest['cheapestDealID']
     }
-
+  
+  // Given an array of game objects, map over the array & create card components from each game
+  
+  // console.log(cheakSharkData)
   const cards = gamesData.map(
     (card, index) =>
       <Card 
       key={card.id}
       heading={card.name}
       img={card.background_image}
-      link={cheapShardData.length === 0?'#':`https://www.cheapshark.com/redirect?dealID=${findCheapestDeal(cheapShardData[index])}`}
+      // link={cheakSharkData.length === 0 || cheakSharkData[index].length === 0 ?'#':`https://www.cheapshark.com/redirect?dealID=${cheakSharkData[index][0]['cheapestDealID']}`}
     />
     )
- 
+  
+  // Connect to the Firestore `deals` DB. set cheakSharkData to DB value
+  
   React.useEffect(
     () =>  {
-      const unsubscribe = onSnapshot(dealsCollection,(snapshot) => {
+
+      const unsubscribeFromDealsDB = onSnapshot(dealsCollection,(snapshot) => {
       const dealsArr = snapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id
         }))
-        console.log(dealsArr)
+        // console.log(dealsArr)
       })
-        async function fetchData(){
-        let tempData = []
-        for (let step = 0; step < gamesData.length; step++){
-          const response = await fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesData[step].slug}`)
-          const data = await response.json()
-          tempData.push(data)
-        }
-        setCheapSharkData(tempData)
-      }
-      (fetchData())
-    return unsubscribe
+
+      // async function fetchDealsBySlug(){
+      //   let tempData = []
+      //   for (let step = 0; step < gamesData.length; step++){
+      //     const response = await 
+      //     fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesData[step].slug}`, {
+      //       headers: {
+      //         "Access-Control-Allow-Origin": "http://localhost:5173/",
+      //         "Access-Control-Allow-Methods": "POST, GET, PUT",
+      //         "Access-Control-Allow-Headers": "Content-Type"
+      //       }
+      //     })
+      //     const data = await response.json()
+      //     tempData.push(data)
+      //   }
+      //   // console.log(tempData)
+      //   setCheapSharkData(tempData)
+      // }
+      // (fetchDealsBySlug())
+
+    return unsubscribeFromDealsDB
   },[])
 
   return (
