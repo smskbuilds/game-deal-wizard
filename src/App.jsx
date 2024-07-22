@@ -3,11 +3,11 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Card from "./components/Card"
 import React from 'react'
-import rawgGameData from './gameData.js'
 import rawgGameDataSmall from './gameDataSmall.js'
-import cheapSharkDataLocal from './cheapSharkDataLocal.js'
 import { onSnapshot, addDoc } from "firebase/firestore"
 import { dealsCollection } from "./firebase.js"
+
+//Got writing to the DB working - I think it wrote 3 more files than I thought - need to figure out why & how to read from DB to verify!
 
 
 function App() {
@@ -16,11 +16,13 @@ function App() {
   const [cheapShardData,setCheapSharkData] = React.useState([])
 
   async function createNewDeal() {
-    const newDeal = {
-        body: "# Type your markdown note's title here"
-    }
-    const newDealRef = await addDoc(dealsCollection, newDeal)
-  }
+    if (cheapShardData.length>0){
+    for (let step = 0; step < cheapShardData.length; step++)
+      if(cheapShardData[step].length>0){
+        for (let innerStep = 0; innerStep < cheapShardData[step].length; innerStep++)
+          {const newDealRef = await addDoc(dealsCollection,cheapShardData[step][innerStep])
+      }}
+  }}
 
   function findCheapestDeal(dealArray) {
     let cheapest = {}
@@ -41,7 +43,7 @@ function App() {
       key={card.id}
       heading={card.name}
       img={card.background_image}
-      // link={cheapShardData.length === 0?'#':`https://www.cheapshark.com/redirect?dealID=${findCheapestDeal(cheapShardData[index])}`}
+      link={cheapShardData.length === 0?'#':`https://www.cheapshark.com/redirect?dealID=${findCheapestDeal(cheapShardData[index])}`}
     />
     )
  
@@ -53,28 +55,17 @@ function App() {
         id: doc.id
         }))
         console.log(dealsArr)
-        setCheapSharkData(dealsArr)
       })
-
-
-      // async function fetchData(){
-      //   let tempData = []
-      //   for (let step = 0; step < gamesData.length; step++){
-      //     const response = await fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesData[step].slug}`)
-      //     const data = await response.json()
-      //     tempData.push(data)
-      //   }
-      //   // console.log(tempData)
-      //   setCheapSharkData(tempData)
+        // async function fetchData(){
+        // let tempData = []
+        // for (let step = 0; step < gamesData.length; step++){
+        //   const response = await fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesData[step].slug}`)
+        //   const data = await response.json()
+        //   tempData.push(data)
+        // }
+        // setCheapSharkData(tempData)
       // }
       // (fetchData())
-
-  //     .then(deals => {
-  //       deals.forEach(deal => {
-  //       console.log(deal.json())
-  //     })
-  //   }
-  // )
     return unsubscribe
   },[])
         
