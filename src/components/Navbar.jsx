@@ -1,4 +1,4 @@
-export default function Navbar() {
+export default function Navbar(props) {
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">
         <div className="container-fluid">
@@ -30,7 +30,7 @@ export default function Navbar() {
                 </li>
             </ul>
             <form className="d-flex" role="search">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) => props.handleChange(e.target.value)} value={props.searchValue}/>
                 <button className="btn btn-outline-success" type="submit">Search</button>
             </form>
             </div>

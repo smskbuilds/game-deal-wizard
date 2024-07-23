@@ -14,8 +14,9 @@ function App() {
 
   const [gamesData,setGamesData] = React.useState([])
   const [cheakSharkData,setCheapSharkData] = React.useState([])
+  const [searchQuery, setSearchQuery] = React.useState('')
 
-  console.log(gamesData)
+  // console.log(gamesData)
 
   // Uploads a CheapShark deal to FireStore. Does not currently check to see if the deal already exists
 
@@ -45,8 +46,17 @@ function App() {
   
   // Given an array of game objects, map over the array & create card components from each game
   
+  function filterCardsBySearch(games){
+    if (searchQuery.length > 2){
+      console.log()
+      return games.filter(game => game['name'].toLowerCase().includes(searchQuery.toLowerCase()))}
+    else {return games}
+  }
+
+
+  
   function filterCards(games){
-    return games.splice(0)
+    return games.toSpliced(0,games.length-10)
   } 
   
   function cards(games){
@@ -79,7 +89,7 @@ function App() {
           ...doc.data(),
           id: doc.id
           }))
-          console.log(gamesArr)
+          // console.log(gamesArr)
           setGamesData(gamesArr)
         })
 
@@ -108,9 +118,9 @@ function App() {
   return (
     <>
       <div>
-        <Navbar />
-        <div className = 'card--container'>
-        {cards(filterCards(gamesData))}
+        <Navbar searchValue = {searchQuery} handleChange = {setSearchQuery}/>
+        <div className = {'card--container'}>
+        {cards(filterCards(filterCardsBySearch(gamesData)))}
         </div>
       </div>
     </>
