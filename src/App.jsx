@@ -4,15 +4,16 @@ import Navbar from './components/Navbar'
 import Card from "./components/Card"
 import React from 'react'
 import rawgGameDataSmall from './gameDataSmall.js'
-import { onSnapshot, addDoc } from "firebase/firestore"
+import { onSnapshot, addDoc, collection, query, where, getDocs } from "firebase/firestore"
 import { dealsCollection, gamesCollection } from "./firebase.js"
 
-function App() {
+function App(props) {
 
+  console.log(props.initGamesData)
 
   // Two state arrays - one carries games data from RAWG, the other carries deals data from CheapShark
 
-  const [gamesData,setGamesData] = React.useState([])
+  const [gamesData,setGamesData] = React.useState(props.initGamesData)
   const [cheakSharkData,setCheapSharkData] = React.useState([])
   const [searchQuery, setSearchQuery] = React.useState('')
 
@@ -56,7 +57,7 @@ function App() {
 
   
   function filterCards(games){
-    return games.toSpliced(0,games.length-10)
+    return games.toSpliced(0,games.length-20)
   } 
   
   function cards(games){
@@ -75,44 +76,45 @@ function App() {
   
   React.useEffect(
     () =>  {
+
       // Connect to the Firestore `deals` DB. set cheakSharkData to DB value
-      const unsubscribeFromDealsDB = onSnapshot(dealsCollection,(snapshot) => {
-      const dealsArr = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-        }))
-        // console.log(dealsArr)
-      })
+      // const unsubscribeFromDealsDB = onSnapshot(dealsCollection,(snapshot) => {
+      // const dealsArr = snapshot.docs.map(doc => ({
+      //   ...doc.data(),
+      //   id: doc.id
+      //   }))
+      //   unsubscribeFromDealsDB
+      // })
 
-      const unsubscribeFromGamesDB = onSnapshot(gamesCollection,(snapshot) => {
-        const gamesArr = snapshot.docs.map(doc => ({
-          ...doc.data(),
-          id: doc.id
-          }))
-          // console.log(gamesArr)
-          setGamesData(gamesArr)
-        })
+      // const unsubscribeFromGamesDB = onSnapshot(gamesCollection,(snapshot) => {
+      //   const gamesArr = snapshot.docs.map(doc => ({
+      //     ...doc.data(),
+      //     id: doc.id
+      //     }))
+      //     setGamesData(gamesArr)
+      //     unsubscribeFromGamesDB
+      //     console.log(gamesArr)
+      //   })
 
-      async function fetchDealsBySlug(){
-        let tempData = []
-        for (let step = 0; step < gamesData.length; step++){
-          const response = await 
-          fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesData[step].slug}`, {
-            headers: {
-              "Access-Control-Allow-Origin": "http://localhost:5173/",
-              "Access-Control-Allow-Methods": "POST, GET, PUT",
-              "Access-Control-Allow-Headers": "Content-Type"
-            }
-          })
-          const data = await response.json()
-          tempData.push(data)
-        }
-        // console.log(tempData)
-        setCheapSharkData(tempData)
-      }
+      // async function fetchDealsBySlug(){
+      //   let tempData = []
+      //   for (let step = 0; step < gamesData.length; step++){
+      //     const response = await 
+      //     fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesData[step].slug}`, {
+      //       headers: {
+      //         "Access-Control-Allow-Origin": "http://localhost:5173/",
+      //         "Access-Control-Allow-Methods": "POST, GET, PUT",
+      //         "Access-Control-Allow-Headers": "Content-Type"
+      //       }
+      //     })
+      //     const data = await response.json()
+      //     tempData.push(data)
+      //   }
+      //   setCheapSharkData(tempData)
+      // }
       // (fetchDealsBySlug())
 
-    return unsubscribeFromDealsDB, unsubscribeFromGamesDB
+    // return unsubscribeFromGamesDB, unsubscribeFromDealsDB
   },[])
 
   return (

@@ -20,3 +20,12 @@
   color: white;
   height: 6rem;
 }
+
+.platforms {
+  display: flex;
+  list-style-type: none;
+}
+
+.platforms > li {
+  margin-right: 30px;
+}

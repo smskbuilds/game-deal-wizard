@@ -1,6 +1,8 @@
+import { SiPlaystation, SiXbox, SiNintendo, SiWindows } from "react-icons/si";
+
 export default function Navbar(props) {
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="light">
         <div className="container-fluid">
             <a className="navbar-brand" href="#">Navbar</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,6 +30,12 @@ export default function Navbar(props) {
                 <li className="nav-item">
                 <a className="nav-link disabled" aria-disabled="true">Disabled</a>
                 </li>
+            </ul>
+            <ul className="platforms">
+                <li><SiPlaystation/></li>
+                <li><SiXbox/></li>
+                <li><SiNintendo/></li>
+                <li><SiWindows/></li>
             </ul>
             <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) => props.handleChange(e.target.value)} value={props.searchValue}/>
