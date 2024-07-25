@@ -4,12 +4,12 @@ import Navbar from './components/Navbar'
 import Card from "./components/Card"
 import React from 'react'
 import rawgGameDataSmall from './gameDataSmall.js'
-import { onSnapshot, addDoc, collection, query, where, getDocs } from "firebase/firestore"
+import { onSnapshot, addDoc, collection, query, where, getDocs, limit } from "firebase/firestore"
 import { dealsCollection, gamesCollection } from "./firebase.js"
 
 function App(props) {
 
-  console.log(props.initGamesData)
+  // console.log(props.initGamesData)
 
   // Two state arrays - one carries games data from RAWG, the other carries deals data from CheapShark
 
@@ -17,7 +17,7 @@ function App(props) {
   const [cheakSharkData,setCheapSharkData] = React.useState([])
   const [searchQuery, setSearchQuery] = React.useState('')
 
-  // console.log(gamesData)
+  // console.log(cheakSharkData)
 
   // Uploads a CheapShark deal to FireStore. Does not currently check to see if the deal already exists
 
@@ -47,9 +47,26 @@ function App(props) {
   
   // Given an array of game objects, map over the array & create card components from each game
   
+  // Annoyingly you can not do string search within FireStore. There are workarounds - I am thinking of implementing
+  // this https://stackoverflow.com/questions/71572963/firebase-queries-where-contains-a-string
+
+
+  async function searchResultFromDB(searchQuery){
+    console.log(searchQuery.toLowerCase())
+    const q = query(gamesCollection, where('name', '==', searchQuery), limit(20))
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      // console.log(doc.id, " => ", doc.data());
+      console.log(doc.data())
+    })
+  }
+
+  if (searchQuery.length > 2){searchResultFromDB(searchQuery)}
+  
   function filterCardsBySearch(games){
+    
     if (searchQuery.length > 2){
-      console.log()
       return games.filter(game => game['name'].toLowerCase().includes(searchQuery.toLowerCase()))}
     else {return games}
   }
@@ -67,7 +84,7 @@ function App(props) {
       key={card.id}
       heading={card.name}
       img={card.background_image}
-      // link={cheakSharkData.length === 0 || cheakSharkData[index].length === 0 ?'#':`https://www.cheapshark.com/redirect?dealID=${cheakSharkData[index][0]['cheapestDealID']}`}
+      link={cheakSharkData.length === 0 || cheakSharkData[index].length === 0 ?'#':`https://www.cheapshark.com/redirect?dealID=${cheakSharkData[index][0]['cheapestDealID']}`}
     />
     )
     return cardsDisplayed  
@@ -96,11 +113,11 @@ function App(props) {
       //     console.log(gamesArr)
       //   })
 
-      // async function fetchDealsBySlug(){
+      // async function fetchDealsBySlug(gamesArray){
       //   let tempData = []
       //   for (let step = 0; step < gamesData.length; step++){
       //     const response = await 
-      //     fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesData[step].slug}`, {
+      //     fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesArray[step].slug}`, {
       //       headers: {
       //         "Access-Control-Allow-Origin": "http://localhost:5173/",
       //         "Access-Control-Allow-Methods": "POST, GET, PUT",
@@ -110,9 +127,25 @@ function App(props) {
       //     const data = await response.json()
       //     tempData.push(data)
       //   }
-      //   setCheapSharkData(tempData)
+      //   return tempData
       // }
-      // (fetchDealsBySlug())
+      
+      // let tempGamesArray = gamesData
+      // let tempDealsArray = []
+      // fetchDealsBySlug(gamesData)
+      // .then(data => 
+      //   {
+      //     tempDealsArray = data
+      //     return data
+      //   })
+      // .then(data => 
+      //   {data.map((fetchedDeal, index) => 
+      //     {if(fetchedDeal.length)
+      //       {tempDealsArray[index][0]['gamesDbId']=tempGamesArray[index]['id']
+      //       }
+      //     })
+      //     setCheapSharkData(tempDealsArray)
+      //   })
 
     // return unsubscribeFromGamesDB, unsubscribeFromDealsDB
   },[])

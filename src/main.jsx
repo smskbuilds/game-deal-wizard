@@ -20,7 +20,7 @@ querySnapshot.forEach((doc) => {
 
 async function fetchData(){
   let results = {}
-  await fetch(`https://api.rawg.io/api/games?key=d9e2c4de47634f138bae98618a84e341&page_size=40&page=30`)
+  await fetch(`https://api.rawg.io/api/games?key=d9e2c4de47634f138bae98618a84e341&page_size=40&page=33`)
   .then(data => data.json())
   .then(res => results = res)
   return results

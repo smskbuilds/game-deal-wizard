@@ -24,8 +24,14 @@
 .platforms {
   display: flex;
   list-style-type: none;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
 }
 
 .platforms > li {
   margin-right: 30px;
 }
+
+/* .platforms > li > * {
+} */
