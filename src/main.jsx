@@ -5,7 +5,6 @@ import './index.css'
 import { onSnapshot, addDoc, collection, query, where, getDocs, orderBy, limit } from "firebase/firestore"
 import { dealsCollection, gamesCollection } from "./firebase.js"
 
-
 const gamesRef = gamesCollection;
 const q = query(gamesCollection, where('metacritic', '!=', null), orderBy("metacritic", 'desc'), limit(20))
 const initGamesDataFromDb = []
@@ -20,7 +19,7 @@ querySnapshot.forEach((doc) => {
 
 async function fetchData(){
   let results = {}
-  await fetch(`https://api.rawg.io/api/games?key=d9e2c4de47634f138bae98618a84e341&page_size=40&page=33`)
+  await fetch(`https://api.rawg.io/api/games?key=d9e2c4de47634f138bae98618a84e341&page_size=40&page=40`)
   .then(data => data.json())
   .then(res => results = res)
   return results

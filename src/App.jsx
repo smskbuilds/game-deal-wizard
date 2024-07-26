@@ -113,39 +113,39 @@ function App(props) {
       //     console.log(gamesArr)
       //   })
 
-      // async function fetchDealsBySlug(gamesArray){
-      //   let tempData = []
-      //   for (let step = 0; step < gamesData.length; step++){
-      //     const response = await 
-      //     fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesArray[step].slug}`, {
-      //       headers: {
-      //         "Access-Control-Allow-Origin": "http://localhost:5173/",
-      //         "Access-Control-Allow-Methods": "POST, GET, PUT",
-      //         "Access-Control-Allow-Headers": "Content-Type"
-      //       }
-      //     })
-      //     const data = await response.json()
-      //     tempData.push(data)
-      //   }
-      //   return tempData
-      // }
+      async function fetchDealsBySlug(gamesArray){
+        let tempData = []
+        for (let step = 0; step < gamesData.length; step++){
+          const response = await 
+          fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesArray[step].slug}`, {
+            headers: {
+              "Access-Control-Allow-Origin": "http://localhost:5173/",
+              "Access-Control-Allow-Methods": "POST, GET, PUT",
+              "Access-Control-Allow-Headers": "Content-Type"
+            }
+          })
+          const data = await response.json()
+          tempData.push(data)
+        }
+        return tempData
+      }
       
-      // let tempGamesArray = gamesData
-      // let tempDealsArray = []
-      // fetchDealsBySlug(gamesData)
-      // .then(data => 
-      //   {
-      //     tempDealsArray = data
-      //     return data
-      //   })
-      // .then(data => 
-      //   {data.map((fetchedDeal, index) => 
-      //     {if(fetchedDeal.length)
-      //       {tempDealsArray[index][0]['gamesDbId']=tempGamesArray[index]['id']
-      //       }
-      //     })
-      //     setCheapSharkData(tempDealsArray)
-      //   })
+      let tempGamesArray = gamesData
+      let tempDealsArray = []
+      fetchDealsBySlug(gamesData)
+      .then(data => 
+        {
+          tempDealsArray = data
+          return data
+        })
+      .then(data => 
+        {data.map((fetchedDeal, index) => 
+          {if(fetchedDeal.length)
+            {tempDealsArray[index][0]['gamesDbId']=tempGamesArray[index]['id']
+            }
+          })
+          setCheapSharkData(tempDealsArray)
+        })
 
     // return unsubscribeFromGamesDB, unsubscribeFromDealsDB
   },[])
