@@ -2,20 +2,26 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { onSnapshot, addDoc, collection, query, where, getDocs, orderBy, limit } from "firebase/firestore"
-import { dealsCollection, gamesCollection } from "./firebase.js"
+import { addDoc, query, where, getDocs, orderBy, limit } from "firebase/firestore"
+import { gamesCollection } from "./firebase.js"
+// import  {onSchedule} from "firebase-functions/v2/scheduler";
+// import {logger} from "firebase-functions";
+
+// exports.getGames = onSchedule("*/5 * * * *", async (event) => {
+//   logger.log("Games Cron Ran!");
+// });
+
+// Query Firestore for initial array of games.
 
 const gamesRef = gamesCollection;
 const q = query(gamesCollection, where('metacritic', '!=', null), orderBy("metacritic", 'desc'), limit(20))
 const initGamesDataFromDb = []
 const querySnapshot = await getDocs(q);
 querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  // console.log(doc.id, " => ", doc.data());
   initGamesDataFromDb.push(doc.data())
 });
 
-// Fetch games data from RAWG API
+// Fetch games data from RAWG API.
 
 async function fetchData(){
   let results = {}
@@ -25,7 +31,7 @@ async function fetchData(){
   return results
   }
 
-// Upload fetched data to Firestore
+// Upload fetched data to Firestore.
 
 async function createNewGameDatabaseEntry(rawgData) {
   if (rawgData['results']?.length>0){
@@ -37,6 +43,8 @@ async function createNewGameDatabaseEntry(rawgData) {
   }
 }
 
+
+// Run fetching data from RAWG & uploading to Firestore.
 // (async () => {
 //   const rawgAPIData = await fetchData()
 //   createNewGameDatabaseEntry(rawgAPIData)
