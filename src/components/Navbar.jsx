@@ -32,7 +32,7 @@ export default function Navbar(props) {
                 </li>
             </ul>
             <ul className="platforms">
-                <li><SiPlaystation/></li>
+                <li onClick = {() => props.handleClick("playstationPlus")}><SiPlaystation/></li>
                 <li><SiXbox/></li>
                 <li><SiNintendo/></li>
                 <li><SiWindows/></li>

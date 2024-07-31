@@ -4,12 +4,6 @@ import App from './App.jsx'
 import './index.css'
 import { addDoc, query, where, getDocs, orderBy, limit } from "firebase/firestore"
 import { gamesCollection } from "./firebase.js"
-// import  {onSchedule} from "firebase-functions/v2/scheduler";
-// import {logger} from "firebase-functions";
-
-// exports.getGames = onSchedule("*/5 * * * *", async (event) => {
-//   logger.log("Games Cron Ran!");
-// });
 
 // Query Firestore for initial array of games.
 

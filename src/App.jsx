@@ -11,18 +11,47 @@ function App(props) {
   const [gamesData,setGamesData] = useState(props.initGamesData)
   const [cheakSharkData,setCheapSharkData] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
-  
-  // Annoyingly you can not do string search within FireStore. There are workarounds - I am thinking of implementing
-  // this https://stackoverflow.com/questions/71572963/firebase-queries-where-contains-a-string
 
+  async function FilterBySubscriptionService(service){
+    const q = query(dealsCollection, where(`subscriptions.${service}`, "==", true))
+    const querySnapshot = await getDocs(q);
+    const gamesOnServiceArray = []
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.data())
+      gamesOnServiceArray.push(doc.data()["gamesDbId"])
+    })
+    setGamesGivenGamesIds(gamesOnServiceArray)
+  }
+
+  async function setGamesGivenGamesIds(Ids){
+    if(Ids.length==0){return};
+    const tempGamesData = []
+    // for(let count = 0; count < Math.floor(Ids.length)+1; count++){
+    //   const q = query(gamesCollection, where("id", "in", "NEED TO FIGURE OUT HOW TO GET A PORTION OF THE IDS BASED ON COUNT!"))
+    //   const querySnapshot = await getDocs(q);
+    //   querySnapshot.forEach((doc) => {
+    //     console.log(doc.data())
+    //     })
+    //   }
+    for(let count = 0; count < Ids.length; count++){
+      const q = query(gamesCollection, where("id", "==", Ids[count]))
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        tempGamesData.push(doc.data())
+        console.log(doc.data())
+      })
+    }
+    console.log(tempGamesData)
+    console.log(tempGamesData.length)
+    setGamesData(tempGamesData)
+
+  }
 
   async function searchResultFromDB(searchQuery){
     console.log(searchQuery.toLowerCase())
     const q = query(gamesCollection, where('name', '==', searchQuery), limit(20))
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      // console.log(doc.id, " => ", doc.data());
       console.log(doc.data())
     })
   }
@@ -40,7 +69,7 @@ function App(props) {
     return games.toSpliced(0,games.length-20)
   } 
   
-  // Given an array of game objects, map over the array & create card components from each game
+  // Given an array of game objects, map over the array & create card components from each game.
 
   function cards(games){
     const cardsDisplayed=games.map(
@@ -63,48 +92,48 @@ function App(props) {
       // Then add the `id` from the game object to the newly created `deal` object.
       // Then set the CheapSharkData state variable to the newly created array of deals.
 
-      async function fetchDealsBySlug(gamesArray){
-        let tempData = []
-        for (let step = 0; step < gamesData.length; step++){
-          const response = await 
-          fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesArray[step].slug}`, {
-            headers: {
-              "Access-Control-Allow-Origin": "http://localhost:5173/",
-              "Access-Control-Allow-Methods": "POST, GET, PUT",
-              "Access-Control-Allow-Headers": "Content-Type"
-            }
-          })
-          const data = await response.json()
-          tempData.push(data)
-        }
-        return tempData
-      }
+      // async function fetchDealsBySlug(gamesArray){
+      //   let tempData = []
+      //   for (let step = 0; step < gamesData.length; step++){
+      //     const response = await 
+      //     fetch(`https://www.cheapshark.com/api/1.0/games?title=${gamesArray[step].slug}`, {
+      //       headers: {
+      //         "Access-Control-Allow-Origin": "http://localhost:5173/",
+      //         "Access-Control-Allow-Methods": "POST, GET, PUT",
+      //         "Access-Control-Allow-Headers": "Content-Type"
+      //       }
+      //     })
+      //     const data = await response.json()
+      //     tempData.push(data)
+      //   }
+      //   return tempData
+      // }
       
-      let tempGamesArray = gamesData
+      // let tempGamesArray = gamesData
       
-      let tempDealsArray = []
+      // let tempDealsArray = []
       
-      /* fetchDealsBySlug(gamesData)
-        .then(data => 
-          {
-            tempDealsArray = data
-            return data
-          })
-        .then(data => 
-          {data.map((fetchedDeal, index) => 
-            {if(fetchedDeal.length)
-              {tempDealsArray[index][0]['gamesDbId']=tempGamesArray[index]['id']
-              }
-            })
-            setCheapSharkData(tempDealsArray)
-          }) */
+      // fetchDealsBySlug(gamesData)
+      //   .then(data => 
+      //     {
+      //       tempDealsArray = data
+      //       return data
+      //     })
+      //   .then(data => 
+      //     {data.map((fetchedDeal, index) => 
+      //       {if(fetchedDeal.length)
+      //         {tempDealsArray[index][0]['gamesDbId']=tempGamesArray[index]['id']
+      //         }
+      //       })
+      //       setCheapSharkData(tempDealsArray)
+      //     })
 
   },[])
 
   return (
     <>
       <div>
-        <Navbar searchValue = {searchQuery} handleChange = {setSearchQuery}/>
+        <Navbar searchValue = {searchQuery} handleChange = {setSearchQuery} handleClick = {FilterBySubscriptionService}/>
         <div className = {'card--container'}>
         {cards(filterCards(filterCardsBySearch(gamesData)))}
         </div>
