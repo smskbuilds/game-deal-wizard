@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { onSnapshot, addDoc, collection, query, where, getDocs, limit } from "firebase/firestore"
 import { dealsCollection, gamesCollection } from "./firebase.js"
+import { toDate } from 'date-fns'
 import Navbar from './components/Navbar'
 import Card from "./components/Card"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -79,6 +80,7 @@ function App(props) {
       heading={card.name}
       img={card.background_image}
       link={cheakSharkData.length === 0 || cheakSharkData[index].length === 0 ?'#':`https://www.cheapshark.com/redirect?dealID=${cheakSharkData[index][0]['cheapestDealID']}`}
+      metacriticScore={card['metacritic']}
     />
     )
     return cardsDisplayed  
@@ -135,7 +137,7 @@ function App(props) {
       <div>
         <Navbar searchValue = {searchQuery} handleChange = {setSearchQuery} handleClick = {FilterBySubscriptionService}/>
         <div className = {'card--container'}>
-        {cards(filterCards(filterCardsBySearch(gamesData)))}
+        {cards(filterCardsBySearch(gamesData))}
         </div>
       </div>
     </>
