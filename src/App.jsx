@@ -31,6 +31,7 @@ function App(props) {
     if(Ids.length==0){return};
     // Create an array of queries to use in a Promise Pool
     const queryPool = Ids.map((id) => query(gamesCollection, where("id", "==", id)))
+    // Call PromisePool class given queryPool array. Set max concurrencies to 1000.
     const { results, errors } = await PromisePool
     .for(queryPool)
     .withConcurrency(1000)
@@ -42,6 +43,7 @@ function App(props) {
       })
       return queryResults
     })
+    // set gamesData state with the results from PromisePool
     setGamesData(results)
   }
 
