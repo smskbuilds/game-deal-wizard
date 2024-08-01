@@ -14,6 +14,7 @@ const querySnapshot = await getDocs(q);
 querySnapshot.forEach((doc) => {
   initGamesDataFromDb.push(doc.data())
 });
+console.log(initGamesDataFromDb)
 
 // Fetch games data from RAWG API.
 

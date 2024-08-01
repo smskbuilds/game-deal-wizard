@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { onSnapshot, addDoc, collection, query, where, getDocs, limit } from "firebase/firestore"
-import { dealsCollection, gamesCollection } from "./firebase.js"
+import { onSnapshot, addDoc, collection, query, where, getDocs, limit, orderBy } from "firebase/firestore"
+import { dealsCollection, gamesCollection, subscriptionsCollection } from "./firebase.js"
 import { toDate } from 'date-fns'
 import Navbar from './components/Navbar'
 import Card from "./components/Card"
@@ -14,13 +14,14 @@ function App(props) {
   const [searchQuery, setSearchQuery] = useState('')
 
   async function FilterBySubscriptionService(service){
-    const q = query(dealsCollection, where(`subscriptions.${service}`, "==", true))
+    const q = query(subscriptionsCollection, orderBy("playstationPlus"))
     const querySnapshot = await getDocs(q);
-    const gamesOnServiceArray = []
+    let gamesOnServiceArray = []
     querySnapshot.forEach((doc) => {
-      // console.log(doc.data())
-      gamesOnServiceArray.push(doc.data()["gamesDbId"])
+      console.log(doc.data())
+      gamesOnServiceArray = doc.data()["playstationPlus"]["gamesDbIds"]
     })
+    console.log(gamesOnServiceArray)
     setGamesGivenGamesIds(gamesOnServiceArray)
   }
 
