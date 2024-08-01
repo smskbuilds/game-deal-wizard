@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { onSnapshot, addDoc, collection, query, where, getDocs, limit, orderBy } from "firebase/firestore"
 import { dealsCollection, gamesCollection, subscriptionsCollection } from "./firebase.js"
 import { toDate } from 'date-fns'
+import { PromisePool } from '@supercharge/promise-pool'
 import Navbar from './components/Navbar'
 import Card from "./components/Card"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -18,35 +19,30 @@ function App(props) {
     const querySnapshot = await getDocs(q);
     let gamesOnServiceArray = []
     querySnapshot.forEach((doc) => {
-      console.log(doc.data())
+      // console.log(doc.data())
       gamesOnServiceArray = doc.data()["playstationPlus"]["gamesDbIds"]
     })
-    console.log(gamesOnServiceArray)
+    // console.log(gamesOnServiceArray)
     setGamesGivenGamesIds(gamesOnServiceArray)
   }
 
   async function setGamesGivenGamesIds(Ids){
+    // If no Ids exit function
     if(Ids.length==0){return};
-    const tempGamesData = []
-    // for(let count = 0; count < Math.floor(Ids.length)+1; count++){
-    //   const q = query(gamesCollection, where("id", "in", "NEED TO FIGURE OUT HOW TO GET A PORTION OF THE IDS BASED ON COUNT!"))
-    //   const querySnapshot = await getDocs(q);
-    //   querySnapshot.forEach((doc) => {
-    //     console.log(doc.data())
-    //     })
-    //   }
-    for(let count = 0; count < Ids.length; count++){
-      const q = query(gamesCollection, where("id", "==", Ids[count]))
+    // Create an array of queries to use in a Promise Pool
+    const queryPool = Ids.map((id) => query(gamesCollection, where("id", "==", id)))
+    const { results, errors } = await PromisePool
+    .for(queryPool)
+    .withConcurrency(1000)
+    .process(async q => {
+      let queryResults = {}
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        tempGamesData.push(doc.data())
-        console.log(doc.data())
+        queryResults = doc.data()
       })
-    }
-    console.log(tempGamesData)
-    console.log(tempGamesData.length)
-    setGamesData(tempGamesData)
-
+      return queryResults
+    })
+    setGamesData(results)
   }
 
   async function searchResultFromDB(searchQuery){
