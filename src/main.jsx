@@ -4,16 +4,8 @@ import App from './App.jsx'
 import './index.css'
 import { addDoc, query, where, getDocs, orderBy, limit } from "firebase/firestore"
 import { gamesCollection } from "./firebase.js"
-import { PromisePool } from '@supercharge/promise-pool'
 
 // Query Firestore for initial array of games.
-
-const { results, errors } = await PromisePool
-.for([1, 2, 3])
-.process(async num => {
-  return num * 2
-})
-// console.log(results)
 
 const gamesRef = gamesCollection;
 const q = query(gamesCollection, where('metacritic', '!=', null), orderBy("metacritic", 'desc'), limit(20))
