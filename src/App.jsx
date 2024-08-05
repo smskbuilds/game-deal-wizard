@@ -27,27 +27,22 @@ function App(props) {
     // If no Ids exit function
     if(DocumentIds.length==0){return};
     // Create an array of queries to use in a Promise Pool
-    const queryPool = DocumentIds.map((id) => query(gamesCollection, where(documentId(), "==", id), limit(20)))
+    const queryPool = DocumentIds.map((id) => query(gamesCollection, where(documentId(), "==", id)))
     // Call PromisePool class given queryPool array. Set max concurrencies to 1000.
     const { results, errors } = await PromisePool
     .for(queryPool)
     .withConcurrency(1000)
     .process(async q => {
-      let queryResults = {}
       const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        queryResults = doc.data()
-      })
-      return queryResults
+      return querySnapshot.docs[0].data()
     })
     // Sort results based on Metacritic score
-    results.sort((a, b) => b.metacritic - a.metacritic)
+    results.sort((a, b) => (b.metacritic == null ? 0 : b.metacritic) - (a.metacritic == null ? 0 : a.metacritic))
     // Set gamesData state with the results from PromisePool
-    setGamesData(filterCards(results))
+    setGamesData(results)
   }
 
   async function searchResultFromDB(searchQuery){
-    console.log(searchQuery.toLowerCase())
     const q = query(gamesCollection, where('name', '==', searchQuery), limit(20))
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -81,6 +76,7 @@ function App(props) {
       metacriticScore={card['metacritic']}
     />
     )
+    console.log(cardsDisplayed)
     return cardsDisplayed  
   }
 
