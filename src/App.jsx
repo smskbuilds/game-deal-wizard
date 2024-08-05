@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { query, where, getDocs, limit, orderBy } from "firebase/firestore"
+import { query, where, getDocs, limit, orderBy, documentId } from "firebase/firestore"
 import { gamesCollection, subscriptionsCollection } from "./firebase.js"
 import { PromisePool } from '@supercharge/promise-pool'
 import Navbar from './components/Navbar'
@@ -18,16 +18,16 @@ function App(props) {
     const querySnapshot = await getDocs(q);
     let gamesOnServiceArray = []
     querySnapshot.forEach((doc) => {
-      gamesOnServiceArray = doc.data()["playstationPlus"]["gamesDbIds"]
+      gamesOnServiceArray = doc.data()["playstationPlus"]["gamesDocumentIds"]
     })
-    setGamesGivenGamesIds(gamesOnServiceArray)
+    setGamesGivenGamesDocumentIds(gamesOnServiceArray)
   }
 
-  async function setGamesGivenGamesIds(Ids){
+  async function setGamesGivenGamesDocumentIds(DocumentIds){
     // If no Ids exit function
-    if(Ids.length==0){return};
+    if(DocumentIds.length==0){return};
     // Create an array of queries to use in a Promise Pool
-    const queryPool = Ids.map((id) => query(gamesCollection, where("id", "==", id)))
+    const queryPool = DocumentIds.map((id) => query(gamesCollection, where(documentId(), "==", id), limit(20)))
     // Call PromisePool class given queryPool array. Set max concurrencies to 1000.
     const { results, errors } = await PromisePool
     .for(queryPool)
@@ -43,7 +43,7 @@ function App(props) {
     // Sort results based on Metacritic score
     results.sort((a, b) => b.metacritic - a.metacritic)
     // Set gamesData state with the results from PromisePool
-    setGamesData(results)
+    setGamesData(filterCards(results))
   }
 
   async function searchResultFromDB(searchQuery){
@@ -88,7 +88,7 @@ function App(props) {
     <>
       <div>
         <Navbar searchValue = {searchQuery} handleChange = {setSearchQuery} handleClick = {FilterBySubscriptionService}/>
-        <div className = {'card--container'}>
+        <div className = 'card--container'>
         {cards(filterCardsBySearch(gamesData))}
         </div>
       </div>
