@@ -1,20 +1,34 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+// import pg from 'pg'
 import './index.css'
 import { addDoc, query, where, getDocs, orderBy, limit } from "firebase/firestore"
 import { gamesCollection } from "./firebase.js"
+
+// const { Client } = pg
+// const client = new Client()
+// await client.connect()
+
+// try {
+//    const res = await client.query('SELECT $1::text as message', ['Hello world!'])
+//    console.log(res.rows[0].message) // Hello world!
+// } catch (err) {
+//    console.error(err);
+// } finally {
+//    await client.end()
+// }
 
 // Query Firestore for initial array of games.
 
 const gamesRef = gamesCollection;
 const q = query(gamesCollection, where('metacritic', '!=', null), orderBy("metacritic", 'desc'), limit(20))
 const initGamesDataFromDb = []
-const querySnapshot = await getDocs(q);
+const querySnapshot = await getDocs(q);``
 querySnapshot.forEach((doc) => {
   initGamesDataFromDb.push(doc.data())
 });
-// console.log(initGamesDataFromDb)
+console.log(initGamesDataFromDb)
 
 // Fetch games data from RAWG API.
 

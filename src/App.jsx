@@ -45,9 +45,6 @@ function App(props) {
   async function searchResultFromDB(searchQuery){
     const q = query(gamesCollection, where('name', '==', searchQuery), limit(20))
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data())
-    })
   }
 
   if (searchQuery.length > 2){searchResultFromDB(searchQuery)}
@@ -76,7 +73,6 @@ function App(props) {
       metacriticScore={card['metacritic']}
     />
     )
-    console.log(cardsDisplayed)
     return cardsDisplayed  
   }
 
