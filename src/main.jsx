@@ -1,75 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import pg from 'pg'
 import './index.css'
 import init_games from './init_games'
 
-// const { Client } = pg
-// const client = new Client({
-//   user:"gameviry_testuser",
-//   password:"JptN0.S!*{B)",
-//   host:"localhost",
-//   port:"5522",
-//   database:"gameviry_gdw"
-// })
-// await client.connect()
- 
-// const res = await client.query('SELECT $1::text as message', ['Hello world!'])
-// console.log(res.rows[0].message) // Hello world!
-// await client.end()
-
-
-// const {Pool} = pg
-
-// async function initGames(){
-//   const pool = new Pool()
-//   pool.on('error', (err, client) => 
-//     {
-//         console.error('Unexpected error on idle client', err)
-//         process.exit(-1)
-//     }
-//   )
-//   const client = await pool.connect()
-//   const res = await client.query(qq)
-//   client.release()
-// }
-
-// initGames()
-
-// const qq = `SELECT games.* FROM games WHERE games.metacritic = 95`
-
-
-
-// const client = new Client({
-//   user: "gameviry_testuser",
-//   database: "gameviry_gdw",
-//   port: 5522,
-//   host: "localhost",
-//   password: "JptN0.S!*{B)",
-//   ssl: false
-//  });
-// await client.connect()
-
-// try {
-//    const res = await client.query('SELECT $1::text as message', ['Hello world!'])
-//    console.log(res.rows[0].message) // Hello world!
-// } catch (err) {
-//    console.error(err);
-// } finally {
-//    await client.end()
-// }
-
-// Query Firestore for initial array of games.
-
-// const gamesRef = gamesCollection;
-// const q = query(gamesCollection, where('metacritic', '!=', null), orderBy("metacritic", 'desc'), limit(20))
-// const initGamesDataFromDb = []
-// const querySnapshot = await getDocs(q);``
-// querySnapshot.forEach((doc) => {
-//   initGamesDataFromDb.push(doc.data())
-// });
-// console.log(initGamesDataFromDb)
+// Add code here for initial game array
 
 // Fetch games data from RAWG API.
 
