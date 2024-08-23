@@ -1,5 +1,4 @@
 export default function Card(props) {
-    // console.log('rendering cards!')
     return (
         <div className="card">
             <img src={props.img} className="card-img-top" />

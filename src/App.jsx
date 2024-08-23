@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import { query, where, getDocs, limit, orderBy, documentId } from "firebase/firestore"
-import { gamesCollection, subscriptionsCollection } from "./firebase.js"
-import { PromisePool } from '@supercharge/promise-pool'
 import Navbar from './components/Navbar'
 import Card from "./components/Card"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -66,8 +63,8 @@ function App(props) {
     const cardsDisplayed=games.map(
     (card, index) =>
       <Card 
-      key={card.id}
-      heading={card.name}
+      key={card.rawg_id}
+      heading={card.game_name}
       img={card.background_image}
       link={cheakSharkData.length === 0 || cheakSharkData[index].length === 0 ?'#':`https://www.cheapshark.com/redirect?dealID=${cheakSharkData[index][0]['cheapestDealID']}`}
       metacriticScore={card['metacritic']}
@@ -81,7 +78,10 @@ function App(props) {
       <div>
         <Navbar searchValue = {searchQuery} handleChange = {setSearchQuery} handleClick = {FilterBySubscriptionService}/>
         <div className = 'card--container'>
-        {cards(filterCardsBySearch(gamesData))}
+          {cards(filterCardsBySearch(gamesData))}
+        </div>
+        <div className = 'load-more-games-button--container'>
+          <button onClick = {() => console.log('clicked!')}>Load More Games</button>
         </div>
       </div>
     </>

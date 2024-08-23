@@ -55,3 +55,10 @@
   line-height: 38px;
   font-size: 14px;
 }
+
+.load-more-games-button--container {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

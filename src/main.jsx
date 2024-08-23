@@ -2,41 +2,17 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import init_games from './init_games'
 
-// Add code here for initial game array
-
-// Fetch games data from RAWG API.
-
-async function fetchData(){
+async function fetchInitGamesArray(){
   let results = {}
-  await fetch(`https://api.rawg.io/api/games?key=d9e2c4de47634f138bae98618a84e341&page_size=40&page=40`)
+  await fetch(`https://gamedealwizard.com/gdw-node/`)
   .then(data => data.json())
   .then(res => results = res)
   return results
   }
 
-// Upload fetched data to Firestore.
-
-async function createNewGameDatabaseEntry(rawgData) {
-  if (rawgData['results']?.length>0){
-    for (let step = 0; step < rawgData['results'].length; step++)
-      {
-        console.log(step)
-        const newDealRef = await addDoc(gamesCollection,rawgData['results'][step])
-    }
-  }
-}
-
-
-// Run fetching data from RAWG & uploading to Firestore.
-// (async () => {
-//   const rawgAPIData = await fetchData()
-//   createNewGameDatabaseEntry(rawgAPIData)
-// })()
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-    <App initGamesData = {init_games}/>
+    <App initGamesData = {await fetchInitGamesArray()}/>
   // </React.StrictMode>
 )
