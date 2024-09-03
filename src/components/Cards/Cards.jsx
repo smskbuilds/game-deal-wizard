@@ -13,8 +13,6 @@ export default function Cards({gamesArray}) {
         />
     )
 
-    console.log(cardsDisplayed)
-
     return (
         <div className = 'card--container'>
             {cardsDisplayed}

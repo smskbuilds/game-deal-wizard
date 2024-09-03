@@ -62,3 +62,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.main {
+  display:grid;
+  grid-template-columns: 10% 90%;
+}
