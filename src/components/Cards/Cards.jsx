@@ -1,7 +1,7 @@
 import Card from './Card'
 
 export default function Cards({gamesArray}) {
-  
+
     // Given an array of game objects, map over the array & create card components from each game.
 
     const cardsDisplayed=gamesArray.map((card) =>

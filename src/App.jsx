@@ -4,47 +4,7 @@ import Cards from "./components/Cards/Cards"
 import Sidebar from './components/Sidebar'
 import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css'
-
-const initFilters = {
-  platforms: 
-      {
-          1:{'platformName':'PC','selected':false},
-          2:{'platformName':'PlayStation','selected':false},
-          3:{'platformName':'Xbox','selected':false},
-          4:{'platformName':'iOS','selected':false},
-          5:{'platformName':'Mac','selected':false},
-          6:{'platformName':'Linux','selected':false},
-          7:{'platformName':'Nintendo','selected':false},
-          8:{'platformName':'Android','selected':false}
-      },
-    subscriptionServices:
-      {
-        1:{'subscriptionName':'ps_plus_extra','selected':false}
-      },
-    genres:
-      {
-        1:{'genreName':'Racing','selected':false},
-        2:{'genreName':'Shooter','selected':false},
-        3:{'genreName':'Adventure','selected':false},
-        4:{'genreName':'Action','selected':false},
-        5:{'genreName':'RPG','selected':false},
-        6:{'genreName':'Fighting','selected':false},
-        7:{'genreName':'Puzzle','selected':false},
-        10:{'genreName':'Strategy','selected':false},
-        11:{'genreName':'Arcade','selected':false},
-        14:{'genreName':'Simulation','selected':false},
-        15:{'genreName':'Sports','selected':false},
-        17:{'genreName':'Card','selected':false},
-        19:{'genreName':'Family','selected':false},
-        28:{'genreName':'Board Games','selected':false},
-        34:{'genreName':'Educational','selected':false},
-        40:{'genreName':'Casual','selected':false},
-        51:{'genreName':'Indie','selected':false},
-        59:{'genreName':'Massively Multiplayer','selected':false},
-        83:{'genreName':'Platformer','selected':false},
-      },
-  page: 1
-}
+import {initFilters, initGames} from './init'
 
 function App() {
 
@@ -68,7 +28,7 @@ function App() {
   }
 
   const [filters, setFilters] = useState(initFilters)
-  const [gamesData,setGamesData] = useState([])
+  const [gamesData,setGamesData] = useState(initGames)
   const [page,setPage] = useState(1)
   const firstRender = useRef(true)
   const firstRender2 = useRef(true)
@@ -133,12 +93,14 @@ function App() {
     <>
       <Navbar/>
       <div className='main'>
+        <div className = 'sidebar' >
         <Sidebar 
-          className = 'sidebar' filters = {filters} 
+          filters = {filters} 
           handlePlatformFilterChange = {handlePlatformFilterChange}
           handleSubscriptionServiceFilterChange = {handleSubscriptionServiceFilterChange}
           handleGenreFilterChange = {handleGenreFilterChange}
-        />
+          />
+        </div>
         <div>
           <Cards gamesArray = {gamesData}/>
           <div className = 'load-more--container'>
