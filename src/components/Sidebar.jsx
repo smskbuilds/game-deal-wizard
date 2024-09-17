@@ -9,8 +9,7 @@ export default function Sidebar({
 
     for (const genre in genreFilters) {
         genreFiltersJsx.push(
-            <>
-                <br />
+            <div key={filters['genres'][genre]['genreName']}>
                 <label>
                     <input
                         type='checkbox'
@@ -19,7 +18,7 @@ export default function Sidebar({
                     />
                     {filters['genres'][genre]['genreName']}
                 </label>
-            </>
+            </div>
         );
     }
 
@@ -28,8 +27,7 @@ export default function Sidebar({
 
     for (const platform in platformFilters) {
         platformFiltersJsx.push(
-            <>
-                <br />
+            <div key={filters['platforms'][platform]['platformName']}>
                 <label>
                     <input
                         type='checkbox'
@@ -38,7 +36,7 @@ export default function Sidebar({
                     />
                     {filters['platforms'][platform]['platformName']}
                 </label>
-            </>
+            </div>
         );
     }
 

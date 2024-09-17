@@ -6,13 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { initFilters, initGames } from './init';
 
-function test() {
-    console.log(2);
-    if (true) {
-        console.log(2);
-    }
-}
-
 function App() {
     async function fetchGamesArray(filters) {
         const platformFilters = [];
@@ -30,15 +23,15 @@ function App() {
             if (filters['genres'][genre]['selected'])
                 genreFilters.push(Number(genre));
         }
-        const URL = `https://gamedealwizard.com/gdw-node/[${platformFilters}]/[${genreFilters}]/[${subscriptionFilters}]/1`;
+        const URL = `https://gamedealwizard.com/gdw-node/[${platformFilters}]/[${genreFilters}]/[${subscriptionFilters}]/${filters['page']}`;
         console.log(URL);
+
         const response = (await fetch(URL)).json();
         return response;
     }
 
     const [filters, setFilters] = useState(initFilters);
     const [gamesData, setGamesData] = useState(initGames);
-    const [page, setPage] = useState(1);
     const firstRender = useRef(true);
     const firstRender2 = useRef(true);
 
@@ -46,6 +39,7 @@ function App() {
         console.log('Function handle Platform Filter Change Ran');
         setFilters((prevState) => ({
             ...prevState,
+            page: 1,
             platforms: {
                 ...prevState.platforms,
                 [platformId]: {
@@ -60,6 +54,7 @@ function App() {
         console.log('Function handle Subscription Service Filter Change Ran');
         setFilters((prevState) => ({
             ...prevState,
+            page: 1,
             subscriptionServices: {
                 ...prevState.subscriptionServices,
                 [ServiceId]: {
@@ -77,6 +72,7 @@ function App() {
         console.log('Function handle Genre Filter Change Ran');
         setFilters((prevState) => ({
             ...prevState,
+            page: 1,
             genres: {
                 ...prevState.genres,
                 [genreId]: {
@@ -87,8 +83,11 @@ function App() {
         }));
     }
 
-    function paginate() {
-        setPage((prevPage) => ++prevPage);
+    function handlePageChange() {
+        setFilters((prevState) => ({
+            ...prevState,
+            page: ++prevState['page'],
+        }));
     }
 
     useEffect(() => {
@@ -98,17 +97,6 @@ function App() {
         }
         initFetchGames();
     }, []);
-
-    useEffect(() => {
-        if (firstRender2.current) {
-            firstRender2.current = false;
-        } else {
-            console.log('Within the Update Page useEffect');
-            fetchGamesArray(page).then((results) =>
-                setGamesData((prevGames) => prevGames.concat(results))
-            );
-        }
-    }, [filters['page']]);
 
     useEffect(() => {
         if (firstRender.current) {
@@ -137,7 +125,9 @@ function App() {
                 <div>
                     <Cards gamesArray={gamesData} />
                     <div className='load-more--container'>
-                        <button onClick={paginate}>Load More Games</button>
+                        <button onClick={handlePageChange}>
+                            Load More Games
+                        </button>
                     </div>
                 </div>
             </div>
