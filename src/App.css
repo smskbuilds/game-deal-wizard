@@ -6,7 +6,7 @@
 }
 
 .card-img-top {
-    height: 16rem;
+    height: 14rem;
     object-fit: contain;
 }
 
@@ -19,11 +19,13 @@
 .card-body {
     color: white;
     height: 6rem;
+    padding: 6px;
 }
 
 .card-title {
     font-size: 18px;
     white-space: nowrap;
+    text-wrap: pretty;
 }
 
 .platforms {

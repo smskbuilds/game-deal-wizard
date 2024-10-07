@@ -33,7 +33,6 @@ function App() {
     const [filters, setFilters] = useState(initFilters);
     const [gamesData, setGamesData] = useState(initGames);
     const firstRender = useRef(true);
-    const firstRender2 = useRef(true);
 
     function handlePlatformFilterChange(platformId) {
         console.log('Function handle Platform Filter Change Ran');
