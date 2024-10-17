@@ -1,0 +1,16 @@
+.sidebar {
+    background-color: black;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.collapsible-content.open {
+    max-height: 1000px; /* Adjust this value based on your content */
+    transition: max-height 0.5s ease-in;
+}

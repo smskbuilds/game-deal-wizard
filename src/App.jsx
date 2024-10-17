@@ -111,16 +111,14 @@ function App() {
         <>
             <Navbar />
             <div className='main'>
-                <div className='sidebar'>
-                    <Sidebar
-                        filters={filters}
-                        handlePlatformFilterChange={handlePlatformFilterChange}
-                        handleSubscriptionServiceFilterChange={
-                            handleSubscriptionServiceFilterChange
-                        }
-                        handleGenreFilterChange={handleGenreFilterChange}
-                    />
-                </div>
+                <Sidebar
+                    filters={filters}
+                    handlePlatformFilterChange={handlePlatformFilterChange}
+                    handleSubscriptionServiceFilterChange={
+                        handleSubscriptionServiceFilterChange
+                    }
+                    handleGenreFilterChange={handleGenreFilterChange}
+                />
                 <div>
                     <Cards gamesArray={gamesData} />
                     <div className='load-more--container'>

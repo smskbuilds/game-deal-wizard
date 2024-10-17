@@ -4,11 +4,11 @@ export default function Navbar(props) {
     return (
         <nav
             className='navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body'
-            data-bs-theme='light'>
+            data-bs-theme='dark'>
             <div className='container-fluid'>
-                <a className='navbar-brand' href='#'>
+                {/* <a className='navbar-brand' href='#'>
                     Navbar
-                </a>
+                </a> */}
                 <button
                     className='navbar-toggler'
                     type='button'
@@ -24,27 +24,27 @@ export default function Navbar(props) {
                     id='navbarSupportedContent'>
                     <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                         <li className='nav-item'>
-                            <a
+                            {/* <a
                                 className='nav-link active'
                                 aria-current='page'
                                 href='#'>
                                 Home
-                            </a>
+                            </a> */}
                         </li>
                         <li className='nav-item'>
-                            <a className='nav-link' href='#'>
+                            {/* <a className='nav-link' href='#'>
                                 Link
-                            </a>
+                            </a> */}
                         </li>
                         <li className='nav-item dropdown'>
-                            <a
+                            {/* <a
                                 className='nav-link dropdown-toggle'
                                 href='#'
                                 role='button'
                                 data-bs-toggle='dropdown'
                                 aria-expanded='false'>
                                 Dropdown
-                            </a>
+                            </a> */}
                             <ul className='dropdown-menu'>
                                 <li>
                                     <a className='dropdown-item' href='#'>
@@ -67,11 +67,11 @@ export default function Navbar(props) {
                             </ul>
                         </li>
                         <li className='nav-item'>
-                            <a
+                            {/* <a
                                 className='nav-link disabled'
                                 aria-disabled='true'>
                                 Disabled
-                            </a>
+                            </a> */}
                         </li>
                     </ul>
                     <ul className='platforms'>

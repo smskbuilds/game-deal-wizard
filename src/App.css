@@ -1,13 +1,12 @@
 .card {
-    margin: 2rem;
+    margin: 1rem;
     width: 22rem;
-    background-color: black;
-    border: solid rgb(139, 136, 136);
+    background-color: #211f1f;
 }
 
 .card-img-top {
     height: 14rem;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .card--container {
@@ -38,6 +37,7 @@
 
 .platforms > li {
     margin-right: 30px;
+    color: white;
 }
 
 .metacritic-button {
@@ -71,9 +71,4 @@
     display: grid;
     grid-template-columns: 10% 90%;
     background-color: black;
-}
-
-.sidebar {
-    background-color: black;
-    color: white;
 }
