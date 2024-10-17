@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Sidebar.css'; // Make sure to create this CSS file
+import './Sidebar.css';
 
 export default function Sidebar({
     filters,
@@ -48,55 +48,61 @@ export default function Sidebar({
     }
 
     return (
-        <div className='sidebar'>
-            <form>
-                <h5
-                    onClick={() => setIsOpenPlatforms(!isOpenPlatforms)}
-                    style={{ cursor: 'pointer' }}>
-                    Platforms {isOpenPlatforms ? '▼' : '▶'}
-                </h5>
-                <div
-                    className={`collapsible-content ${
-                        isOpenPlatforms ? 'open' : ''
-                    }`}>
-                    {platformFiltersJsx}
-                </div>
+        <form className='sidebar'>
+            <h5
+                className='sidebar-heading'
+                onClick={() => setIsOpenPlatforms(!isOpenPlatforms)}
+                style={{ cursor: 'pointer' }}>
+                Platforms{' '}
+                <span className='collapse-icon'>
+                    {isOpenPlatforms ? '▼' : '▶'}
+                </span>
+            </h5>
+            <div
+                className={`collapsible-content ${
+                    isOpenPlatforms ? 'open' : ''
+                }`}>
+                {platformFiltersJsx}
+            </div>
 
-                <h5
-                    onClick={() => setIsOpenSubscriptions(!isOpenSubscriptions)}
-                    style={{ cursor: 'pointer' }}>
-                    Subscriptions {isOpenSubscriptions ? '▼' : '▶'}
-                </h5>
-                <div
-                    className={`collapsible-content ${
-                        isOpenSubscriptions ? 'open' : ''
-                    }`}>
-                    <label>
-                        <input
-                            type='checkbox'
-                            checked={
-                                filters['subscriptionServices'][1]['selected']
-                            }
-                            onChange={() =>
-                                handleSubscriptionServiceFilterChange(1)
-                            }
-                        />
-                        PS Plus Extra
-                    </label>
-                </div>
+            <h5
+                className='sidebar-heading'
+                onClick={() => setIsOpenSubscriptions(!isOpenSubscriptions)}
+                style={{ cursor: 'pointer' }}>
+                Subscriptions{' '}
+                <span className='collapse-icon'>
+                    {isOpenSubscriptions ? '▼' : '▶'}
+                </span>
+            </h5>
+            <div
+                className={`collapsible-content ${
+                    isOpenSubscriptions ? 'open' : ''
+                }`}>
+                <label>
+                    <input
+                        type='checkbox'
+                        checked={filters['subscriptionServices'][1]['selected']}
+                        onChange={() =>
+                            handleSubscriptionServiceFilterChange(1)
+                        }
+                    />
+                    PS Plus Extra
+                </label>
+            </div>
 
-                <h5
-                    onClick={() => setIsOpenGenres(!isOpenGenres)}
-                    style={{ cursor: 'pointer' }}>
-                    Genres {isOpenGenres ? '▼' : '▶'}
-                </h5>
-                <div
-                    className={`collapsible-content ${
-                        isOpenGenres ? 'open' : ''
-                    }`}>
-                    {genreFiltersJsx}
-                </div>
-            </form>
-        </div>
+            <h5
+                className='sidebar-heading'
+                onClick={() => setIsOpenGenres(!isOpenGenres)}
+                style={{ cursor: 'pointer' }}>
+                Genres{' '}
+                <span className='collapse-icon'>
+                    {isOpenGenres ? '▼' : '▶'}
+                </span>
+            </h5>
+            <div
+                className={`collapsible-content ${isOpenGenres ? 'open' : ''}`}>
+                {genreFiltersJsx}
+            </div>
+        </form>
     );
 }

@@ -23,6 +23,7 @@
 
 .card-title {
     font-size: 18px;
+    font-weight: 300;
     white-space: nowrap;
     text-wrap: pretty;
 }
@@ -49,6 +50,7 @@
 }
 
 .card-bottom-row {
+    margin-top: 18px;
     display: flex;
     justify-content: space-between;
 }
