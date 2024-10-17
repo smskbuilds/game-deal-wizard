@@ -17,7 +17,7 @@ export default function Sidebar({
     for (const genre in genreFilters) {
         genreFiltersJsx.push(
             <div key={filters['genres'][genre]['genreName']}>
-                <label>
+                <label className='sidebar-checkbox'>
                     <input
                         type='checkbox'
                         checked={filters['genres'][genre]['selected']}
@@ -35,8 +35,9 @@ export default function Sidebar({
     for (const platform in platformFilters) {
         platformFiltersJsx.push(
             <div key={filters['platforms'][platform]['platformName']}>
-                <label>
+                <label className='sidebar-checkbox'>
                     <input
+                        className='sidebar-checkbox'
                         type='checkbox'
                         checked={filters['platforms'][platform]['selected']}
                         onChange={() => handlePlatformFilterChange(platform)}
@@ -64,7 +65,6 @@ export default function Sidebar({
                 }`}>
                 {platformFiltersJsx}
             </div>
-
             <h5
                 className='sidebar-heading'
                 onClick={() => setIsOpenSubscriptions(!isOpenSubscriptions)}
@@ -78,7 +78,7 @@ export default function Sidebar({
                 className={`collapsible-content ${
                     isOpenSubscriptions ? 'open' : ''
                 }`}>
-                <label>
+                <label className='sidebar-checkbox'>
                     <input
                         type='checkbox'
                         checked={filters['subscriptionServices'][1]['selected']}

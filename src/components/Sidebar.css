@@ -16,11 +16,15 @@
 }
 
 .sidebar-heading {
-    font-weight: 300;
+    font-weight: 200;
 }
 
 .collapse-icon {
     font-size: 0.5em;
     vertical-align: middle;
     margin-left: 5px;
+}
+
+.sidebar-checkbox {
+    font-weight: 200;
 }

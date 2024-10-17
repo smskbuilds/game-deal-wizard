@@ -121,8 +121,10 @@ function App() {
                 />
                 <div>
                     <Cards gamesArray={gamesData} />
-                    <div className='load-more--container'>
-                        <button onClick={handlePageChange}>
+                    <div className='load-more-container'>
+                        <button
+                            className='load-more-button'
+                            onClick={handlePageChange}>
                             Load More Games
                         </button>
                     </div>
