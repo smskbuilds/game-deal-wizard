@@ -11,6 +11,12 @@ function App() {
         const platformFilters = [];
         const subscriptionFilters = [];
         const genreFilters = [];
+        let searchFilters = '';
+        if (filters['searchResults'].length >= 3) {
+            searchFilters = filters['searchResults'];
+        } else {
+            searchFilters = '[]';
+        }
         for (const platform in filters['platforms']) {
             if (filters['platforms'][platform]['selected'])
                 platformFilters.push(Number(platform));
@@ -23,9 +29,8 @@ function App() {
             if (filters['genres'][genre]['selected'])
                 genreFilters.push(Number(genre));
         }
-        const URL = `https://gamedealwizard.com/gdw-node/[${platformFilters}]/[${genreFilters}]/[${subscriptionFilters}]/${filters['page']}`;
+        const URL = `https://gamedealwizard.com/gdw-node/[${platformFilters}]/[${genreFilters}]/[${subscriptionFilters}]/${filters['page']}/${searchFilters}`;
         console.log(URL);
-
         const response = (await fetch(URL)).json();
         return response;
     }
@@ -33,6 +38,13 @@ function App() {
     const [filters, setFilters] = useState(initFilters);
     const [gamesData, setGamesData] = useState(initGames);
     const firstRender = useRef(true);
+
+    function handleSearchChange(searchResults) {
+        setFilters((prevState) => ({
+            ...prevState,
+            searchResults: searchResults,
+        }));
+    }
 
     function handlePlatformFilterChange(platformId) {
         console.log('Function handle Platform Filter Change Ran');
@@ -109,7 +121,7 @@ function App() {
 
     return (
         <>
-            <Navbar />
+            <Navbar filters={filters} handleSearchChange={handleSearchChange} />
             <div className='main'>
                 <Sidebar
                     filters={filters}

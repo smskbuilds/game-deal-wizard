@@ -1,6 +1,23 @@
 import { SiPlaystation, SiXbox, SiNintendo, SiWindows } from 'react-icons/si';
+import { useState, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 
 export default function Navbar(props) {
+    const [inputValue, setInputValue] = useState(props.searchResults);
+
+    const debouncedSetSearchResults = useCallback(
+        debounce((value) => {
+            props.setSearchResults(value);
+        }, 500),
+        []
+    );
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setInputValue(value);
+        debouncedSetSearchResults(value);
+    };
+
     return (
         <nav
             className='navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body'
@@ -94,12 +111,16 @@ export default function Navbar(props) {
                             type='search'
                             placeholder='Search'
                             aria-label='Search'
+                            value={props.searchResults}
+                            onChange={(e) =>
+                                props.handleSearchChange(e.target.value)
+                            }
                         />
-                        <button
+                        {/*                         <button
                             className='btn btn-outline-success'
                             type='submit'>
                             Search
-                        </button>
+                        </button> */}
                     </form>
                 </div>
             </div>

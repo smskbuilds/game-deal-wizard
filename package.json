@@ -17,6 +17,8 @@
     "events": "^3.3.0",
     "firebase": "^10.12.3",
     "firebase-functions": "^5.0.1",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "puppeteer": "^22.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

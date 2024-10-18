@@ -601,6 +601,7 @@ const initFilters = {
         83: { genreName: 'Platformer', selected: false },
     },
     page: 1,
+    searchResults: '[]',
 };
 
 export { initGames, initFilters };
