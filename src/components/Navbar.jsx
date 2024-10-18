@@ -3,19 +3,14 @@ import { useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
 export default function Navbar(props) {
-    const [inputValue, setInputValue] = useState(props.searchResults);
-
-    const debouncedSetSearchResults = useCallback(
-        debounce((value) => {
-            props.setSearchResults(value);
-        }, 500),
-        []
+    const debouncedSearch = useCallback(
+        debounce((value) => props.handleSearchChange(value), 500),
+        [props.handleSearchChange]
     );
 
     const handleInputChange = (e) => {
         const value = e.target.value;
-        setInputValue(value);
-        debouncedSetSearchResults(value);
+        debouncedSearch(value);
     };
 
     return (
@@ -112,9 +107,7 @@ export default function Navbar(props) {
                             placeholder='Search'
                             aria-label='Search'
                             value={props.searchResults}
-                            onChange={(e) =>
-                                props.handleSearchChange(e.target.value)
-                            }
+                            onChange={handleInputChange}
                         />
                         {/*                         <button
                             className='btn btn-outline-success'

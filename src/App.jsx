@@ -30,7 +30,7 @@ function App() {
                 genreFilters.push(Number(genre));
         }
         const URL = `https://gamedealwizard.com/gdw-node/[${platformFilters}]/[${genreFilters}]/[${subscriptionFilters}]/${filters['page']}/${searchFilters}`;
-        console.log(URL);
+        // console.log(URL);
         const response = (await fetch(URL)).json();
         return response;
     }
@@ -47,7 +47,7 @@ function App() {
     }
 
     function handlePlatformFilterChange(platformId) {
-        console.log('Function handle Platform Filter Change Ran');
+        // console.log('Function handle Platform Filter Change Ran');
         setFilters((prevState) => ({
             ...prevState,
             page: 1,
@@ -62,7 +62,7 @@ function App() {
     }
 
     function handleSubscriptionServiceFilterChange(ServiceId) {
-        console.log('Function handle Subscription Service Filter Change Ran');
+        // console.log('Function handle Subscription Service Filter Change Ran');
         setFilters((prevState) => ({
             ...prevState,
             page: 1,
@@ -80,7 +80,7 @@ function App() {
     }
 
     function handleGenreFilterChange(genreId) {
-        console.log('Function handle Genre Filter Change Ran');
+        // console.log('Function handle Genre Filter Change Ran');
         setFilters((prevState) => ({
             ...prevState,
             page: 1,
@@ -113,9 +113,9 @@ function App() {
         if (firstRender.current) {
             firstRender.current = false;
         } else {
-            console.log('Within the filters useEffect');
+            // console.log('Within the filters useEffect');
             fetchGamesArray(filters).then((results) => setGamesData(results));
-            console.log(filters);
+            // console.log(filters);
         }
     }, [filters]);
 
