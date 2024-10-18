@@ -48,6 +48,40 @@ export default function Sidebar({
         );
     }
 
+    let subscriptionFilters = filters['subscriptionServices'];
+    let subscriptionFiltersJsx = [];
+
+    for (const subscription in subscriptionFilters) {
+        subscriptionFiltersJsx.push(
+            <div
+                key={
+                    filters['subscriptionServices'][subscription][
+                        'subscriptionName'
+                    ]
+                }>
+                <label className='sidebar-checkbox'>
+                    <input
+                        className='sidebar-checkbox'
+                        type='checkbox'
+                        checked={
+                            filters['subscriptionServices'][subscription][
+                                'selected'
+                            ]
+                        }
+                        onChange={() =>
+                            handleSubscriptionServiceFilterChange(subscription)
+                        }
+                    />
+                    {
+                        filters['subscriptionServices'][subscription][
+                            'subscriptionName'
+                        ]
+                    }
+                </label>
+            </div>
+        );
+    }
+
     return (
         <form className='sidebar'>
             <h5
@@ -78,16 +112,7 @@ export default function Sidebar({
                 className={`collapsible-content ${
                     isOpenSubscriptions ? 'open' : ''
                 }`}>
-                <label className='sidebar-checkbox'>
-                    <input
-                        type='checkbox'
-                        checked={filters['subscriptionServices'][1]['selected']}
-                        onChange={() =>
-                            handleSubscriptionServiceFilterChange(1)
-                        }
-                    />
-                    PS Plus Extra
-                </label>
+                {subscriptionFiltersJsx}
             </div>
 
             <h5
