@@ -1,13 +1,19 @@
 .sidebar {
     background-color: black;
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Noto Sans Display', sans-serif;
+    font-optical-sizing: auto;
 }
 
 .collapsible-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
+    border-radius: 1px;
+    border-color: #212529;
+    border-width: 1px;
+    border-style: solid;
+    padding-left: 4px;
 }
 
 .collapsible-content.open {
@@ -16,7 +22,12 @@
 }
 
 .sidebar-heading {
-    font-weight: 200;
+    font-weight: 300;
+    font-size: 16px;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    background-color: #212529;
+    padding-left: 4px;
 }
 
 .collapse-icon {
@@ -27,4 +38,11 @@
 
 .sidebar-checkbox {
     font-weight: 200;
+    font-size: 14px;
+    accent-color: #212529;
+}
+
+.filter-section {
+    margin-left: 10px;
+    padding-left: 4px;
 }

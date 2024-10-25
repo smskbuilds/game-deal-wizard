@@ -23,7 +23,7 @@ export default function Sidebar({
                         checked={filters['genres'][genre]['selected']}
                         onChange={() => handleGenreFilterChange(genre)}
                     />
-                    {filters['genres'][genre]['genreName']}
+                    {' ' + filters['genres'][genre]['genreName']}
                 </label>
             </div>
         );
@@ -42,7 +42,7 @@ export default function Sidebar({
                         checked={filters['platforms'][platform]['selected']}
                         onChange={() => handlePlatformFilterChange(platform)}
                     />
-                    {filters['platforms'][platform]['platformName']}
+                    {' ' + filters['platforms'][platform]['platformName']}
                 </label>
             </div>
         );
@@ -72,11 +72,10 @@ export default function Sidebar({
                             handleSubscriptionServiceFilterChange(subscription)
                         }
                     />
-                    {
+                    {' ' +
                         filters['subscriptionServices'][subscription][
                             'subscriptionName'
-                        ]
-                    }
+                        ]}
                 </label>
             </div>
         );
@@ -84,49 +83,47 @@ export default function Sidebar({
 
     return (
         <form className='sidebar'>
-            <h5
-                className='sidebar-heading'
-                onClick={() => setIsOpenPlatforms(!isOpenPlatforms)}
-                style={{ cursor: 'pointer' }}>
-                Platforms{' '}
-                <span className='collapse-icon'>
-                    {isOpenPlatforms ? '▼' : '▶'}
-                </span>
-            </h5>
-            <div
-                className={`collapsible-content ${
-                    isOpenPlatforms ? 'open' : ''
-                }`}>
-                {platformFiltersJsx}
+            <div className='filter-section'>
+                <h5
+                    className='sidebar-heading'
+                    onClick={() => setIsOpenPlatforms(!isOpenPlatforms)}
+                    style={{ cursor: 'pointer' }}>
+                    Narrow By Platforms
+                </h5>
+                <div
+                    className={`collapsible-content ${
+                        isOpenPlatforms ? 'open' : ''
+                    }`}>
+                    {platformFiltersJsx}
+                </div>
             </div>
-            <h5
-                className='sidebar-heading'
-                onClick={() => setIsOpenSubscriptions(!isOpenSubscriptions)}
-                style={{ cursor: 'pointer' }}>
-                Subscriptions{' '}
-                <span className='collapse-icon'>
-                    {isOpenSubscriptions ? '▼' : '▶'}
-                </span>
-            </h5>
-            <div
-                className={`collapsible-content ${
-                    isOpenSubscriptions ? 'open' : ''
-                }`}>
-                {subscriptionFiltersJsx}
+            <div className='filter-section'>
+                <h5
+                    className='sidebar-heading'
+                    onClick={() => setIsOpenSubscriptions(!isOpenSubscriptions)}
+                    style={{ cursor: 'pointer' }}>
+                    Narrow By Subscriptions
+                </h5>
+                <div
+                    className={`collapsible-content ${
+                        isOpenSubscriptions ? 'open' : ''
+                    }`}>
+                    {subscriptionFiltersJsx}
+                </div>
             </div>
-
-            <h5
-                className='sidebar-heading'
-                onClick={() => setIsOpenGenres(!isOpenGenres)}
-                style={{ cursor: 'pointer' }}>
-                Genres{' '}
-                <span className='collapse-icon'>
-                    {isOpenGenres ? '▼' : '▶'}
-                </span>
-            </h5>
-            <div
-                className={`collapsible-content ${isOpenGenres ? 'open' : ''}`}>
-                {genreFiltersJsx}
+            <div className='filter-section'>
+                <h5
+                    className='sidebar-heading'
+                    onClick={() => setIsOpenGenres(!isOpenGenres)}
+                    style={{ cursor: 'pointer' }}>
+                    Narrow By Genres
+                </h5>
+                <div
+                    className={`collapsible-content ${
+                        isOpenGenres ? 'open' : ''
+                    }`}>
+                    {genreFiltersJsx}
+                </div>
             </div>
         </form>
     );
