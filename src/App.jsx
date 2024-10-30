@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Cards from './components/Cards/Cards';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/Sidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { initFilters, initGames } from './init';
@@ -123,15 +123,7 @@ function App() {
         <>
             <Navbar filters={filters} handleSearchChange={handleSearchChange} />
             <div className='main'>
-                <Sidebar
-                    filters={filters}
-                    handlePlatformFilterChange={handlePlatformFilterChange}
-                    handleSubscriptionServiceFilterChange={
-                        handleSubscriptionServiceFilterChange
-                    }
-                    handleGenreFilterChange={handleGenreFilterChange}
-                />
-                <div>
+                <div className='main-content'>
                     <Cards gamesArray={gamesData} />
                     <div className='load-more-container'>
                         <button
@@ -141,6 +133,14 @@ function App() {
                         </button>
                     </div>
                 </div>
+                <Sidebar
+                    filters={filters}
+                    handlePlatformFilterChange={handlePlatformFilterChange}
+                    handleSubscriptionServiceFilterChange={
+                        handleSubscriptionServiceFilterChange
+                    }
+                    handleGenreFilterChange={handleGenreFilterChange}
+                />
             </div>
         </>
     );

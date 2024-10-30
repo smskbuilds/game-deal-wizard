@@ -7,8 +7,8 @@ export default function Sidebar({
     handleSubscriptionServiceFilterChange,
     handleGenreFilterChange,
 }) {
-    const [isOpenPlatforms, setIsOpenPlatforms] = useState(false);
-    const [isOpenSubscriptions, setIsOpenSubscriptions] = useState(false);
+    const [isOpenPlatforms, setIsOpenPlatforms] = useState(true);
+    const [isOpenSubscriptions, setIsOpenSubscriptions] = useState(true);
     const [isOpenGenres, setIsOpenGenres] = useState(false);
 
     let genreFilters = filters['genres'];
