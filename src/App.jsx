@@ -9,7 +9,7 @@ import { initFilters, initGames } from './init';
 function App() {
     async function fetchGamesArray(filters) {
         const platformFilters = [];
-        const subscriptionFilters = [];
+        const subscriptionFilters = [1];
         const genreFilters = [];
         let searchFilters = '';
         if (filters['searchResults'].length >= 3) {
@@ -30,13 +30,13 @@ function App() {
                 genreFilters.push(Number(genre));
         }
         const URL = `https://gamedealwizard.com/gdw-node/[${platformFilters}]/[${genreFilters}]/[${subscriptionFilters}]/${filters['page']}/${searchFilters}`;
-        // console.log(URL);
+        console.log(URL);
         const response = (await fetch(URL)).json();
         return response;
     }
 
     const [filters, setFilters] = useState(initFilters);
-    const [gamesData, setGamesData] = useState(initGames);
+    const [gamesData, setGamesData] = useState([]);
     const firstRender = useRef(true);
 
     function handleSearchChange(searchResults) {

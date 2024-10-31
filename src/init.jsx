@@ -577,7 +577,7 @@ const initFilters = {
         8: { platformName: 'Android', selected: false },
     },
     subscriptionServices: {
-        1: { subscriptionName: 'PS Plus Extra', selected: false },
+        1: { subscriptionName: 'PS Plus Extra', selected: true },
         2: { subscriptionName: 'Epic Free Games', selected: false },
         3: { subscriptionName: 'Prime Gaming', selected: false },
     },
